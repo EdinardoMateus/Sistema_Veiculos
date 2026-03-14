@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head></head>
+<body>
+<!-- Fragmento do Menu -->
+<nav th:fragment="menu" class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/}">Estoque Veículos</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" th:href="@{/}" th:classappend="${currentPage == 'home' ? 'active' : ''}">Home</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/veiculos}" th:classappend="${currentPage == 'veiculos' ? 'active' : ''}">Veículos</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/veiculos/novo}" th:classappend="${currentPage == 'novo-veiculo' ? 'active' : ''}">Cadastrar Veículo</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/veiculos/consulta}" th:classappend="${currentPage == 'consulta' ? 'active' : ''}">Consulta Avançada</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/marcas}" th:classappend="${currentPage == 'marcas' ? 'active' : ''}">Marcas</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/modelos}" th:classappend="${currentPage == 'modelos' ? 'active' : ''}">Modelos</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Fragmento do Breadcrumb -->
+<nav th:fragment="breadcrumb(pagina, subpagina)" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+        <li class="breadcrumb-item" th:if="${subpagina != null}"><a th:href="@{${pagina}}}" th:text="${pagina}">Página</a></li>
+        <li class="breadcrumb-item active" th:if="${subpagina != null}" th:text="${subpagina}" aria-current="page">Subpágina</li>
+        <li class="breadcrumb-item active" th:if="${subpagina == null}" th:text="${pagina}" aria-current="page">Página Atual</li>
+    </ol>
+</nav>
+</body>
+</html>

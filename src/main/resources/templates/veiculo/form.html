@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title th:if="${veiculo.id == null}">Novo Veículo</title>
+  <title th:unless="${veiculo.id == null}">Editar Veículo</title>
+  <link th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">...</nav>
+<div th:replace="~{fragments :: menu}"></div>
+<div class="container mt-4">
+  <h2 th:text="${veiculo.id == null} ? 'Cadastrar Veículo' : 'Editar Veículo'">Formulário</h2>
+
+  <form th:action="@{/veiculos/salvar}" method="post" th:object="${veiculo}" class="row g-3">
+
+    <input type="hidden" name="id" th:value="*{id}" />
+
+    <div class="col-md-6">
+      <label class="form-label">Modelo:</label>
+      <select name="modelo.id" class="form-select" required>
+        <option value="">Selecione...</option>
+        <option th:each="m : ${modelos}" th:value="${m.id}" th:text="${m.marca.nome + ' ' + m.nome}" th:selected="${veiculo.modelo != null and veiculo.modelo.id == m.id}"></option>
+      </select>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Cor:</label>
+      <input type="text" name="cor" class="form-control" th:value="*{cor}" required />
+    </div>
+
+    <div class="col-md-3">
+      <label class="form-label">Ano:</label>
+      <input type="number" name="anoFabricacao" class="form-control" th:value="*{anoFabricacao}" required />
+    </div>
+
+    <div class="col-md-3">
+      <label class="form-label">Preço (R$):</label>
+      <input type="number" step="0.01" name="preco" class="form-control" th:value="*{preco}" required />
+    </div>
+
+    <div class="col-md-3">
+      <label class="form-label">Quilometragem:</label>
+      <input type="number" name="quilometragem" class="form-control" th:value="*{quilometragem}" required />
+    </div>
+
+    <div class="col-md-3">
+      <label class="form-label">Status:</label>
+      <select name="status" class="form-select" required>
+        <option value="DISPONIVEL" th:selected="*{status == 'DISPONIVEL'}">Disponível</option>
+        <option value="RESERVADO" th:selected="*{status == 'RESERVADO'}">Reservado</option>
+        <option value="VENDIDO" th:selected="*{status == 'VENDIDO'}">Vendido</option>
+      </select>
+    </div>
+
+    <div class="col-12">
+      <button type="submit" class="btn btn-success">Salvar</button>
+      <a th:href="@{/veiculos}" class="btn btn-secondary">Cancelar</a>
+    </div>
+  </form>
+</div>
+</body>
+</html>
